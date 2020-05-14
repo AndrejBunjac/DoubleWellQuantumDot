@@ -47,10 +47,8 @@ int main() {
 		return 1;
 	}
 */
-//	double* Vmat = new double[nzmax * nzmax * 2 * 2];
-	double Vmat[nzmax][nzmax][2][2] = { 0 };
-//	double* Smat = new double[nzmax * nzmax * 2 * 2];
-	double Smat[nzmax][nzmax][2][2] = { 0 };	
+	double* Vmat = new double[nzmax * nzmax * 2 * 2];
+	double* Smat = new double[nzmax * nzmax * 2 * 2];	
 	double Ehoz[nzmax] = { 0 };
 	double Ehorm[nrmax][mmax] = { 0 };
 
@@ -80,15 +78,15 @@ int main() {
 				{
 					int alk_in = alk + 1;
 					int alb_in = alb + 1;
-//					int count = Overlaps::GetCount(ib, ik, alb, alk, nzmax, nzmax, 2, 2);
-//					Vmat[count] = Overlaps::VIntegrate(alk_in, alb_in, ik, ib);
-					Vmat[ib][ik][alb][alk] = Overlaps::VIntegrate(alk_in, alb_in, ik, ib);
-//					Smat[count] = Overlaps::SIntegrate(alk_in, alb_in, ik, ib);
-					Smat[ib][ik][alb][alk] = Overlaps::SIntegrate(alk_in, alb_in, ik, ib);
+					int count = Overlaps::GetCount(ib, ik, alb, alk, nzmax, nzmax, 2, 2);
+					Vmat[count] = Overlaps::VIntegrate(alk_in, alb_in, ik, ib);
+					Smat[count] = Overlaps::SIntegrate(alk_in, alb_in, ik, ib);
 				}
 			}
 		}
 	}
+
+	printf("Vmat[1,2,1,1] =%f\n", Vmat[Overlaps::GetCount(1, 2, 1, 1, nzmax, nzmax, 2, 2)]);
 
 	const int matsize = 4 * nzmax * nzmax * nrmax * nrmax;
 
@@ -137,30 +135,18 @@ int main() {
 													int count_a = Overlaps::GetCount(izb, izk, alb, alk, nzmax, nzmax, 2, 2);
 													int count_b = Overlaps::GetCount(jzb, jzk, beb, bek, nzmax, nzmax, 2, 2);
 
-													//Matrices for diagonalization
 													double Hmat_el =	double(BasicFunctions::KroneckerDelta(irb, irk)) *
 																		double(BasicFunctions::KroneckerDelta(jrb, jrk)) *
 																	(	(Ehorm[irk][m1] + Ehorm[jrk][m2] + Ehoz[izk] + Ehoz[jzk]) *
-																		Smat[izb][izk][alb][alk] * Smat[jzb][jzk][beb][bek] +
-																		Vmat[izb][izk][alb][alk] * Smat[jzb][jzk][beb][bek] +
-																		Smat[izb][izk][alb][alk] * Vmat[jzb][jzk][beb][bek]	);
-
-//													double Hmat_el = double(BasicFunctions::KroneckerDelta(irb, irk)) *
-//														double(BasicFunctions::KroneckerDelta(jrb, jrk)) *
-//														((Ehorm[irk][m1] + Ehorm[jrk][m2] + Ehoz[izk] + Ehoz[jzk]) *
-//															Smat[count_a] * Smat[count_b] +
-//															Vmat[count_a] * Smat[count_b] +
-//															Smat[count_a] * Vmat[count_b]);
+																		Smat[count_a] * Smat[count_b] +
+																		Vmat[count_a] * Smat[count_b] +
+																		Smat[count_a] * Vmat[count_b]);
 
 													gsl_matrix_set(Hmat, i, j, Hmat_el);
 
 													double Emat_el =	double(BasicFunctions::KroneckerDelta(irb, irk)) *
 																		double(BasicFunctions::KroneckerDelta(jrb, jrk)) *
-																		Smat[izb][izk][alb][alk] * Smat[jzb][jzk][beb][bek];
-
-//													double Emat_el = double(BasicFunctions::KroneckerDelta(irb, irk)) *
-//														double(BasicFunctions::KroneckerDelta(jrb, jrk)) *
-//														Smat[count_a] * Smat[count_b];
+																		Smat[count_a] * Smat[count_b];
 
 													gsl_matrix_set(Emat, i, j, Emat_el);
 
@@ -177,8 +163,8 @@ int main() {
 		}
 	}
 
-//	delete[]Vmat;
-//	delete[]Smat;
+	delete[]Vmat;
+	delete[]Smat;
 
 	
 

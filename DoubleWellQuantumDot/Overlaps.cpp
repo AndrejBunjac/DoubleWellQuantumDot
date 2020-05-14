@@ -115,7 +115,7 @@ double Overlaps::phibra(const int& nzb, const double& z_bra)
 
 int Overlaps::GetCount(const int& i, const int& j, const int& k, const int& z, const int& i_max, const int& j_max, const int& k_max, const int& z_max)
 {
-	return j_max * k_max * z_max + k_max * z_max * j + z_max * k + z;
+	return j_max * k_max * z_max * i + k_max * z_max * j + z_max * k + z;
 }
 
 
