@@ -17,6 +17,6 @@ namespace Parameters {
 	static int am2 = std::abs(m2);
 	static int constexpr mmax = 4;
 
-	const int nzmax = 3;
-	const int nrmax = 3;
+//	const int nzmax = 3;
+//	const int nrmax = 3;
 };

@@ -22,7 +22,7 @@ int main() {
 	steady_clock::time_point startTime = steady_clock::now();
 
 // INPUT HANDLING
-/*
+
 	int nzmax_in = 0;
 	int nrmax_in = 0;
 
@@ -46,7 +46,10 @@ int main() {
 		std::cin.get();
 		return 1;
 	}
-*/
+
+	int nzmax = nzmax_in;
+	int nrmax = nrmax_in;
+
 	double* Vmat = new double[nzmax * nzmax * 2 * 2]();
 	double* Smat = new double[nzmax * nzmax * 2 * 2]();
 	double* Ehoz = new double[nzmax]();
