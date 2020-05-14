@@ -21,6 +21,7 @@ public:
 
 	//Counter acquisition
 	static int GetCount(const int& i, const int& j, const int& k, const int& z, const int& i_max, const int& j_max, const int& k_max, const int& z_max);
+	static int GetCount(const int& i, const int& j, const int& i_max, const int& j_max);
 
 public:
 	//Harmonic Oscilator Energies
