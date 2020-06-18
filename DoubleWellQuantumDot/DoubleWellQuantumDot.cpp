@@ -27,6 +27,7 @@ int main() {
 	int nrmax_in = 0;
 
 	//Handle input parameters
+	/*PROVERITI CASTING IZ DOUBLE U INT*/
 	std::string line;
 	std::ifstream myfile("InputFile.txt");
 	if (myfile.is_open()) {
