@@ -1,2 +1,2 @@
-nzmax = 4
-nrmax = 4
+nzmax = 2
+nrmax = 2
