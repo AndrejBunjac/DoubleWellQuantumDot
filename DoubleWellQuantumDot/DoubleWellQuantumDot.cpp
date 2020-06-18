@@ -168,12 +168,13 @@ int main() {
 		}
 	}
 
-	/*TESTING PURPOSES*/
+	/*TESTING PURPOSES
 	{
 		FILE* f = fopen("test.dat", "wb");
 		FilesStrings::print_matrix(f, Hmat);
 		fclose(f);
 	}
+	*/
 
 	delete[]Vmat;
 	delete[]Smat;
