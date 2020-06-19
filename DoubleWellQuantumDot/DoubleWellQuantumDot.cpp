@@ -53,23 +53,7 @@ int main() {
 
 	double* Vmat = new double[nzmax * nzmax * 2 * 2]();
 	double* Smat = new double[nzmax * nzmax * 2 * 2]();
-	double* Ehoz = new double[nzmax]();
-	double* Ehorm = new double[nrmax * mmax]();
 
-	for (int ik = 0; ik < nzmax; ik++)
-	{
-		Ehoz[ik] = Overlaps::Eharmonic(ik);
-	}
-
-	for (int ik = 0; ik < nrmax; ik++) 
-	{
-		for (int mk = 0; mk < mmax; mk++)
-		{
-			int count = Overlaps::GetCount(ik,mk,nrmax,mmax);
-			Ehorm[count] = Overlaps::Eharmonic(ik,mk);
-		}
-	}
-	
 	for (int ib = 0; ib < nzmax; ib++)
 	{
 
@@ -137,12 +121,14 @@ int main() {
 
 													int count_a = Overlaps::GetCount(izb, izk, alb, alk, nzmax, nzmax, 2, 2);
 													int count_b = Overlaps::GetCount(jzb, jzk, beb, bek, nzmax, nzmax, 2, 2);
-													int count_e1 = Overlaps::GetCount(irk,m1,nrmax,mmax);
-													int count_e2 = Overlaps::GetCount(jrk,m2,nrmax,mmax);
+													double er1 = Overlaps::Eharmonic(irk, m1);
+													double er2 = Overlaps::Eharmonic(jrk, m2);
+													double ez1 = Overlaps::Eharmonic(izk);
+													double ez2 = Overlaps::Eharmonic(jzk);
 
 													double Hmat_el =	double(BasicFunctions::KroneckerDelta(irb, irk)) *
 																		double(BasicFunctions::KroneckerDelta(jrb, jrk)) *
-																	(	(Ehorm[count_e1] + Ehorm[count_e2] + Ehoz[izk] + Ehoz[jzk]) *
+																	(	(er1 + er2 + ez1 + ez2) *
 																		Smat[count_a] * Smat[count_b] +
 																		Vmat[count_a] * Smat[count_b] +
 																		Smat[count_a] * Vmat[count_b]);
@@ -168,18 +154,17 @@ int main() {
 		}
 	}
 
-	/*TESTING PURPOSES*/
+	/*
+	TESTING PURPOSES
 	{
 		FILE* f = fopen("test.dat", "wb");
 		FilesStrings::print_matrix(f, Hmat);
 		fclose(f);
 	}
-	
+	*/
 
 	delete[]Vmat;
 	delete[]Smat;
-	delete[]Ehorm;
-	delete[]Ehoz;
 
 	gsl_vector* eigenvalues =	gsl_vector_alloc(matsize);
 	gsl_eigen_gensymm_workspace* w = gsl_eigen_gensymm_alloc(matsize);

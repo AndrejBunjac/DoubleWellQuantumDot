@@ -118,11 +118,6 @@ int Overlaps::GetCount(const int& i, const int& j, const int& k, const int& z, c
 	return j_max * k_max * z_max * i + k_max * z_max * j + z_max * k + z;
 }
 
-int Overlaps::GetCount(const int& i, const int& j, const int& i_max, const int& j_max)
-{
-	return j_max*i + j;
-}
-
 
 double Overlaps::Eharmonic(const int& n_principal, const int& m_magnetic)
 {
