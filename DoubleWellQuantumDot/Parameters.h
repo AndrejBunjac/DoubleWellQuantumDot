@@ -13,10 +13,5 @@ namespace Parameters {
 	//Quantum number setup
 	static int constexpr m1 = 0;
 	static int constexpr m2 = 0;
-	static int am1 = std::abs(m1);
-	static int am2 = std::abs(m2);
-	static int constexpr mmax = 4;
 
-//	const int nzmax = 3;
-//	const int nrmax = 3;
 };
